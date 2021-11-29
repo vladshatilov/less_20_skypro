@@ -1,3 +1,5 @@
+from flask_restx import abort
+
 from dao.movie import MovieDAO
 
 
@@ -19,6 +21,8 @@ class MovieService:
 
     def partially_update(self, movie_d):
         movie = self.get_one(movie_d["id"])
+        if movie is None:
+            return "wrong movie", 404
         if "title" in movie_d:
             movie.title = movie_d.get("title")
         if "description" in movie_d:
@@ -36,4 +40,6 @@ class MovieService:
         self.dao.update(movie)
 
     def delete(self, rid):
+        if rid is None:
+            return "wrong request", 404
         self.dao.delete(rid)

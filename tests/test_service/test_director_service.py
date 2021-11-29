@@ -35,6 +35,11 @@ class TestDirectorService():
         assert dir_one.id == 1
         assert dir_one.name == 'Dddao'
 
+    def test_bad_get_one(self,director_dao):
+        director_dao.get_one.return_value=None
+        dir_one = self.dir_service.get_one(None)
+        assert dir_one is None
+
     def test_get_all(self):
         dirs = self.dir_service.get_all()
         assert len(dirs)>0
@@ -52,5 +57,12 @@ class TestDirectorService():
         dir_d = {"id": 1, "name": "ss"}
         self.dir_service.update(dir_d)
 
+    def test_bad_partially_update(self):
+        dir_d = {"id": 41}
+        self.dir_service.update(dir_d)
+
     def test_delete(self):
         self.dir_service.delete(1)
+
+    def test_bad_delete(self):
+        self.dir_service.delete(None)

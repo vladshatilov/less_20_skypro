@@ -48,6 +48,11 @@ class TestMovieService():
         assert movie_one.year == 2015
         assert movie_one.title == 'Омерзительная восьмерка'
 
+    def test_bad_get_one(self,movie_dao):
+        movie_dao.get_one.return_value=None
+        movie_one = self.movie_service.get_one(None)
+        assert movie_one is None
+
     def test_get_all(self):
         movies = self.movie_service.get_all()
         assert len(movies) == 3
@@ -89,3 +94,6 @@ class TestMovieService():
 
     def test_delete(self):
         self.movie_service.delete(1)
+
+    def test_bad_delete_request(self):
+        self.movie_service.delete(None)

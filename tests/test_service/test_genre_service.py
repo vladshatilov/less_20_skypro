@@ -33,6 +33,11 @@ class TestGenreService():
         assert genre_one.id == 1
         assert genre_one.name == 'fantastic'
 
+    def test_bad_get_one(self,genre_dao):
+        genre_dao.get_one.return_value=None
+        genre_one = self.gen_service.get_one(None)
+        assert genre_one is None
+
     def test_get_all(self):
         genres = self.gen_service.get_all()
         assert len(genres)>0
@@ -50,5 +55,12 @@ class TestGenreService():
         gen_d = {"id": 1, "name": "ss"}
         self.gen_service.update(gen_d)
 
+    def test_bad_partially_update(self):
+        gen_d = {"id": 41}
+        self.gen_service.update(gen_d)
+
     def test_delete(self):
         self.gen_service.delete(1)
+
+    def test_bad_delete(self):
+        self.gen_service.delete(None)

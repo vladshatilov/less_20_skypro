@@ -19,9 +19,13 @@ class GenreService:
 
     def partially_update(self, genre_d):
         genre = self.get_one(genre_d["id"])
+        if (genre is None):
+            return "wrong genre", 404
         if "name" in genre_d:
             genre.name = genre_d.get("name")
         self.dao.update(genre)
 
     def delete(self, rid):
+        if (rid is None):
+            return "wrong request", 404
         self.dao.delete(rid)

@@ -19,9 +19,13 @@ class DirectorService:
 
     def partially_update(self, director_d):
         director = self.get_one(director_d["id"])
+        if (director is None):
+            return "wrong director", 404
         if "name" in director_d:
             director.name = director_d.get("name")
         self.dao.update(director)
 
     def delete(self, rid):
+        if (rid is None):
+            return "wrong request", 404
         self.dao.delete(rid)
